@@ -9,7 +9,7 @@ export class UIService {
         console.clear();
     }
 
-    async showGameStartBanner(playerCount: number) {
+    async showGameStartBanner(playerCount: number, players: Player[]) {
         console.log(`
             /=========================================\\
             |                                         |
@@ -19,9 +19,11 @@ export class UIService {
             \\=========================================/`);
     
             console.log(`(Type "exit" at any time to quit the game.)\n\n`);
-            console.log(`Starting with ${playerCount} players...\n`);
-            await delay(4000);
-            console.log(`Every player has been dealt  cards...\n`);
+            console.log(`Starting with ${playerCount} players...`);
+            await delay(2000);
+            console.log(players.map(p => p.name).join(" vs "));
+            await delay(3000);
+            console.log(`\n\nEvery player has been dealt 5 cards...\n`);
             await delay(2000);
     }
 
@@ -49,7 +51,7 @@ export class UIService {
         });
     }
 
-    showNewRoundBanner(currentPlayer: Player) {
+   async showNewRoundBanner(currentPlayer: Player) {
         console.log("\n/------------------- NEW ROUND -------------------\\");
         if (currentPlayer.name === "You") {
             console.log("|                  It's your turn!                |");
@@ -57,6 +59,7 @@ export class UIService {
             console.log(`| Turn: ${currentPlayer.name.padEnd(42)}|`);
         }
         console.log("\\-------------------------------------------------/");
+        await delay(2000);
     }
 
     showRoundResults(played: { player: Player; card: Card }[], chosenFeature: Feature) {
@@ -71,8 +74,11 @@ export class UIService {
         console.log("+==============================================+\n");
     }
 
-    showRoundWinner(winner: Player, cardCount: number) {
+    
+
+   async showRoundWinner(winner: Player, cardCount: number) {
         console.log(`\n${winner.name} won the round and collected ${cardCount} cards!`);
+        await delay(1000);
     }
 
     showPlayerCardCounts(players: Player[]) {

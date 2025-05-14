@@ -43,10 +43,10 @@ export class Game {
 
     public async start() {
         console.clear();
-        await this.uiService.showGameStartBanner(this.playerCount);
+        await this.uiService.showGameStartBanner(this.playerCount, this.players);
 
         while (!this.isGameOver()) {
-            this.playRound();
+           await this.playRound();
         }
 
         const winner = this.players.find(p => !p.isEliminated());
@@ -68,7 +68,7 @@ export class Game {
         this.currentPlayerIndex %= activePlayers.length;
         const currentPlayer = activePlayers[this.currentPlayerIndex];
 
-        this.uiService.showNewRoundBanner(currentPlayer);
+        await this.uiService.showNewRoundBanner(currentPlayer);
 
     
         // --- SELECT FEATURE ---
@@ -130,7 +130,7 @@ export class Game {
         roundWinner.receiveCards(shuffle(playedCards));
         roundWinner.incrementWin();
     
-        console.log(`\n${roundWinner.name} won the round and collected ${playedCards.length} cards!`);
+        await this.uiService.showRoundWinner(roundWinner, playedCards.length);
         this.nextTurn();
         this.showPlayerCardCounts();
         safeInput("\nPress ENTER to continue (or type 'exit'): ");
