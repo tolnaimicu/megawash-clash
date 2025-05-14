@@ -17,7 +17,7 @@ export class Card {
   
     constructor() {
       this.rpm = Math.floor(Math.random() * 1000) + 1000;
-      this.energyRating = Math.floor(Math.random() * 6) + 1; // 1 to 6
+      this.energyRating = Math.floor(Math.random() * 6) + 1;
       this.fastestProgram = Math.floor(Math.random() * 30) + 30;
       this.capacity = Math.floor(Math.random() * 6) + 5;
     }

@@ -12,8 +12,8 @@ export class Game {
     players: Player[] = [];
     currentPlayerIndex: number = 0;
     private uiService: UIService;
-    private roundNumber: number = 1; //For current round checking
-    private cardsPerPlayer: number = 0; // Number of cards for each player
+    private roundNumber: number = 1; //for current round checking
+    private cardsPerPlayer: number = 0; // number of cards for each player
 
 
     constructor(private playerCount: number) {
@@ -22,14 +22,14 @@ export class Game {
     }
 
     private setupGame() {
-        // First player is "You", the rest are controller robots
+        // first player is "You", the rest are controller robots
         this.players.push(new Player("You"));
         for (let i = 1; i < this.playerCount; i++) {
             this.players.push(new Player(`Robot_${i}`));
         }
     
-        // Doing the deck and dealing cards
-        const totalCards = this.playerCount * this.cardsPerPlayer; // Use cardsPerPlayer
+        // doing the deck and dealing cards
+        const totalCards = this.playerCount * this.cardsPerPlayer; // use cardsPerPlayer
         const deck = new Deck(totalCards);
         const hands = deck.deal(this.playerCount);
     
@@ -40,7 +40,7 @@ export class Game {
     
         console.log("--------------------------");
     
-        // Selecting the starting player
+        // selecting the starting player
         this.currentPlayerIndex = Math.floor(Math.random() * this.players.length);
     }
 
@@ -51,7 +51,7 @@ export class Game {
             1, 52  );
     
 
-        // Initiating the game
+        // initiating the game
         this.setupGame();
     
         await this.uiService.showGameStartBanner(this.playerCount, this.players, this.cardsPerPlayer);
@@ -72,11 +72,11 @@ export class Game {
         this.uiService.showEliminatedPlayers(eliminated);
 
     
-        // If there is onyl 1 player left the game ends
+        // if there is onyl 1 player left the game ends
         if (this.players.length <= 1) return;
         
 
-        // Checking how many users are left
+        // checking how many users are left
         const activePlayers = this.players;
         this.currentPlayerIndex %= activePlayers.length;
         const currentPlayer = activePlayers[this.currentPlayerIndex];

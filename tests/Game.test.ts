@@ -21,7 +21,7 @@ describe("Game Logic", () => {
     
         player1.deck = [createCard(1500, 4, 45, 9)];
         player2.deck = [createCard(1000, 2, 50, 6)];
-        player3.deck = []; // Already eliminated
+        player3.deck = []; // already eliminated
     
         const mockGame = Object.create(Game.prototype) as Game;
         (mockGame as any).players = [player1, player2, player3];
@@ -69,7 +69,7 @@ describe("Game Logic", () => {
 
     expect(r1.getValueByFeature(f)).toBe(r2.getValueByFeature(f));
 
-    // Tiebreaker cards
+    // tiebreaker cards
     const t1 = p1.playTopCard();
     const t2 = p2.playTopCard();
 
