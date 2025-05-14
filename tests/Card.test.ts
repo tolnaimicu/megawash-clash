@@ -23,4 +23,11 @@ describe("Card", () => {
     expect(card.getValueByFeature(Feature.FASTEST)).toBe(-40); // Lower is better
     expect(card.getValueByFeature(Feature.CAPACITY)).toBe(8);
   });
+
+  it("should display energy rating as label", () => {
+    const card = new Card();
+    card.energyRating = 6;
+    const str = card.toString();
+    expect(str.includes("A+++")).toBe(true);
+  });
 });

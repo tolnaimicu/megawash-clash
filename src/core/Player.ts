@@ -3,6 +3,7 @@ import { Card } from "./Card";
 export class Player {
   name: string;
   deck: Card[];
+  roundsWon: number = 0;
 
   constructor(name: string) {
     this.name = name;
@@ -14,7 +15,7 @@ export class Player {
   }
 
   getTopCard(): Card | null {
-    return this.deck[0] ?? null;
+    return this.deck.length > 0 ? this.deck[0] : null;
   }
 
   playTopCard(): Card | null {
@@ -23,5 +24,9 @@ export class Player {
 
   receiveCards(cards: Card[]) {
     this.deck.push(...cards);
+  }
+
+  incrementWin() {
+    this.roundsWon++;
   }
 }

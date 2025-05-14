@@ -19,4 +19,11 @@ describe("Player", () => {
     const player = new Player("EmptyPlayer");
     expect(player.isEliminated()).toBe(true);
   });
+
+  it("should track rounds won", () => {
+    const player = new Player("Test");
+    player.incrementWin();
+    player.incrementWin();
+    expect(player.roundsWon).toBe(2);
+  });
 });
