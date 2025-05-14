@@ -13,6 +13,7 @@ export class Deck {
     shuffle(this.cards);
   }
 
+  // dealing the cards evenly to the players and returnign the hands
   deal(playersCount: number): Card[][] {
     const result: Card[][] = Array(playersCount).fill(null).map(() => []);
     for (let i = 0; i < this.cards.length; i++) {

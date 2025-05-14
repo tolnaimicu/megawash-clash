@@ -21,7 +21,8 @@ export class UIService {
             console.log(`(Type "exit" at any time to quit the game.)\n\n`);
             console.log(`Starting with ${playerCount} players...`);
             await delay(2000);
-            console.log(`<<< ${players.map(p => p.name).join(" vs ")} >>>`);            await delay(3000);
+            console.log(`<<< ${players.map(p => p.name).join(" vs ")} >>>`);
+            await delay(3000);
             console.log(`\n\nEvery player has been dealt ${cardsPerPlayer} cards...\n`);
             await delay(2000);
     }
@@ -66,6 +67,8 @@ export class UIService {
             const val = p.card.getValueByFeature(chosenFeature);
             const displayVal = chosenFeature === Feature.ENERGY
                 ? Card.energyLabels[p.card.energyRating] ?? val
+                : chosenFeature === Feature.FASTEST
+                ? Math.abs(val) // Convert negative fastestProgram values to positive
                 : val;
             console.log(`| ${p.player.name.padEnd(10)}: ${FeatureDisplayNames[chosenFeature]} = ${displayVal}`);
         });

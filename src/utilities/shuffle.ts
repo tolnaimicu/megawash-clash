@@ -6,13 +6,15 @@ export function shuffle<T>(array: T[]): T[] {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
   
-      // swap
+      // swapping the current element with the a random one
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex],
         array[currentIndex],
       ];
     }
-  
+
+
+    // returign the shuffled array
     return array;
   }
   

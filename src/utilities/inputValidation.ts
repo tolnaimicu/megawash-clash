@@ -1,7 +1,7 @@
 import readlineSync from "readline-sync";
 import { UIService } from "../utilities/UIService";
 
-const uiService = new UIService(); // Create an instance of UIService
+const uiService = new UIService();
 
 
 export function safeInput(prompt: string): string {

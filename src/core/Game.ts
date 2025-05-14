@@ -2,7 +2,6 @@ import { Card } from "./Card";
 import { Player } from "./Player";
 import { Deck } from "./Deck";
 import { Feature, FeatureDisplayNames } from "../values/features";
-import readlineSync from "readline-sync";
 import { shuffle } from "../utilities/shuffle";
 import { safeInput, validateNumericInput } from "../utilities/inputValidation";
 import { UIService } from "../utilities/UIService";
@@ -13,8 +12,8 @@ export class Game {
     players: Player[] = [];
     currentPlayerIndex: number = 0;
     private uiService: UIService;
-    private roundNumber: number = 1; // Add a property to track the round number
-    private cardsPerPlayer: number = 0;
+    private roundNumber: number = 1; //For current round checking
+    private cardsPerPlayer: number = 0; // Number of cards for each player
 
 
     constructor(private playerCount: number) {
@@ -23,13 +22,13 @@ export class Game {
     }
 
     private setupGame() {
-        // Create players
+        // First player is "You", the rest are controller robots
         this.players.push(new Player("You"));
         for (let i = 1; i < this.playerCount; i++) {
             this.players.push(new Player(`Robot_${i}`));
         }
     
-        // Create and deal the deck
+        // Doing the deck and dealing cards
         const totalCards = this.playerCount * this.cardsPerPlayer; // Use cardsPerPlayer
         const deck = new Deck(totalCards);
         const hands = deck.deal(this.playerCount);
@@ -38,13 +37,10 @@ export class Game {
             player.deck = hands[index];
         });
 
-        console.log("\n--- Player Card Counts ---");
-    this.players.forEach((player, index) => {
-        console.log(`${player.name}: ${player.deck.length} cards`);
-    });
-    console.log("--------------------------");
     
-        // Random starting player
+        console.log("--------------------------");
+    
+        // Selecting the starting player
         this.currentPlayerIndex = Math.floor(Math.random() * this.players.length);
     }
 
@@ -52,11 +48,10 @@ export class Game {
         console.clear();
         this.cardsPerPlayer = validateNumericInput(
             "Enter the number of cards each player should receive (min 1): ",
-            1,
-            52 // Assuming a maximum of 52 cards in the deck
-        );
+            1, 52  );
     
-        // Call setupGame after cardsPerPlayer is set
+
+        // Initiating the game
         this.setupGame();
     
         await this.uiService.showGameStartBanner(this.playerCount, this.players, this.cardsPerPlayer);
@@ -77,9 +72,11 @@ export class Game {
         this.uiService.showEliminatedPlayers(eliminated);
 
     
-        if (this.players.length <= 1) return; // Game is over
+        // If there is onyl 1 player left the game ends
+        if (this.players.length <= 1) return;
+        
 
-        // Recalculate activePlayers and currentPlayer
+        // Checking how many users are left
         const activePlayers = this.players;
         this.currentPlayerIndex %= activePlayers.length;
         const currentPlayer = activePlayers[this.currentPlayerIndex];
@@ -89,7 +86,7 @@ export class Game {
         this.roundNumber++;
 
     
-        // --- SELECT FEATURE ---
+        //  FEATURE SECTION 
         let chosenFeature: Feature;
         const userCard = currentPlayer.getTopCard();
     
@@ -103,7 +100,7 @@ export class Game {
             console.log(`\n${currentPlayer.name} chose to compete with: ${FeatureDisplayNames[chosenFeature]}`);
         }
     
-        // --- PLAY CARDS BEFORE COMPARISON ---
+        //  PLAYING TOP CARDS
         const played: { player: Player; card: Card }[] = [];
     
         for (const player of activePlayers) {
@@ -120,7 +117,7 @@ export class Game {
 
         let playedCards: Card[] = played.map(p => p.card);
     
-        // --- TIEBREAKER LOOP ---
+        //  TIEBREAKER SECTION
         while (winners.length > 1) {
             console.log("\nTiebreaker!");
     
