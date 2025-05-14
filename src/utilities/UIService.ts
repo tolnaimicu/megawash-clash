@@ -29,13 +29,12 @@ export class UIService {
     showExitMessage() {
         console.clear();
         console.log(`
-        /=========================================\\
-        |                                         |
-        |         EXITING MEGAWASH CLASH!         |
-        |           see you next time :)          |
-        |                                         |
-        \\=========================================/
-        `);
+            /=========================================\\
+            |                                         |
+            |         EXITING MEGAWASH CLASH          |
+            |             see you soon :)             |
+            |                                         |
+            \\=========================================/\n`);
         process.exit(0);
     }
 
