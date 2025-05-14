@@ -27,16 +27,16 @@ describe("Game Logic", () => {
         (mockGame as any).players = [player1, player2, player3];
         (mockGame as any).currentPlayerIndex = 0;
     
-        // Simulate a round
-        const c1 = player1.playTopCard();
-        const c2 = player2.playTopCard();
+        // simulating a round
+        const p1 = player1.playTopCard();
+        const p2 = player2.playTopCard();
 
-        if (!c1 || !c2) {
+        if (!p1 || !p2) {
             throw new Error("One or both players have no cards to play.");
           }
 
           
-        player1.receiveCards([c1, c2]);
+        player1.receiveCards([p1, p2]);
     
         expect(player1.deck.length).toBe(2);
         expect(player2.isEliminated()).toBe(true);
@@ -59,7 +59,7 @@ describe("Game Logic", () => {
 
     const f = Feature.RPM;
 
-    // Tie in first card
+    
     const r1 = p1.playTopCard();
     const r2 = p2.playTopCard();
 

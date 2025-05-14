@@ -20,7 +20,7 @@ describe("Card", () => {
 
     expect(card.getValueByFeature(Feature.RPM)).toBe(1600);
     expect(card.getValueByFeature(Feature.ENERGY)).toBe(4);
-    expect(card.getValueByFeature(Feature.FASTEST)).toBe(-40); // Lower is better
+    expect(card.getValueByFeature(Feature.FASTEST)).toBe(-40); 
     expect(card.getValueByFeature(Feature.CAPACITY)).toBe(8);
   });
 
