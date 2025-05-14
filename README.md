@@ -21,8 +21,10 @@ Clone the repo and run it using ts-node:
 ```bash
 npm install
 npx ts-node src/cli/main.ts
----
+
+
 Clone the repo and use it with Docker:
+
 ```bash
 docker build -t megawash-clash .
 docker run -it megawash-clash
