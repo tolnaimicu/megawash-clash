@@ -23,8 +23,16 @@ npm install
 npx ts-node src/cli/main.ts
 
 
+## Run it with Docker
+
 Clone the repo and use it with Docker:
 
 ```bash
 docker build -t megawash-clash .
 docker run -it megawash-clash
+
+## Run tests:
+
+```bash
+npx jest
+
