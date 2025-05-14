@@ -13,10 +13,12 @@ export class Game {
     players: Player[] = [];
     currentPlayerIndex: number = 0;
     private uiService: UIService;
+    private roundNumber: number = 1; // Add a property to track the round number
+    private cardsPerPlayer: number = 0;
+
 
     constructor(private playerCount: number) {
         if (playerCount < 3) throw new Error("Minimum 3 players required.");
-        this.setupGame();
         this.uiService = new UIService();
     }
 
@@ -26,29 +28,43 @@ export class Game {
         for (let i = 1; i < this.playerCount; i++) {
             this.players.push(new Player(`Robot_${i}`));
         }
-
+    
         // Create and deal the deck
-        const extraCards = 5;
-        const totalCards = this.playerCount * extraCards;
+        const totalCards = this.playerCount * this.cardsPerPlayer; // Use cardsPerPlayer
         const deck = new Deck(totalCards);
         const hands = deck.deal(this.playerCount);
-
+    
         this.players.forEach((player, index) => {
             player.deck = hands[index];
         });
 
+        console.log("\n--- Player Card Counts ---");
+    this.players.forEach((player, index) => {
+        console.log(`${player.name}: ${player.deck.length} cards`);
+    });
+    console.log("--------------------------");
+    
         // Random starting player
         this.currentPlayerIndex = Math.floor(Math.random() * this.players.length);
     }
 
     public async start() {
         console.clear();
-        await this.uiService.showGameStartBanner(this.playerCount, this.players);
-
+        this.cardsPerPlayer = validateNumericInput(
+            "Enter the number of cards each player should receive (min 1): ",
+            1,
+            52 // Assuming a maximum of 52 cards in the deck
+        );
+    
+        // Call setupGame after cardsPerPlayer is set
+        this.setupGame();
+    
+        await this.uiService.showGameStartBanner(this.playerCount, this.players, this.cardsPerPlayer);
+    
         while (!this.isGameOver()) {
-           await this.playRound();
+            await this.playRound();
         }
-
+    
         const winner = this.players.find(p => !p.isEliminated());
         this.uiService.showGameOver(winner, this.players);
     }
@@ -68,7 +84,9 @@ export class Game {
         this.currentPlayerIndex %= activePlayers.length;
         const currentPlayer = activePlayers[this.currentPlayerIndex];
 
-        await this.uiService.showNewRoundBanner(currentPlayer);
+        await this.uiService.showNewRoundBanner(currentPlayer, this.roundNumber);
+
+        this.roundNumber++;
 
     
         // --- SELECT FEATURE ---

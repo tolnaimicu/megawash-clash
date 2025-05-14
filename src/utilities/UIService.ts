@@ -9,21 +9,20 @@ export class UIService {
         console.clear();
     }
 
-    async showGameStartBanner(playerCount: number, players: Player[]) {
+    async showGameStartBanner(playerCount: number, players: Player[], cardsPerPlayer: number) {
         console.log(`
             /=========================================\\
             |                                         |
             |         MEGAWASH CLASH BEGINS!          |
             |       The Ultimate Appliance Battle     |
             |                                         |
-            \\=========================================/`);
+            \\=========================================/\n`);
     
             console.log(`(Type "exit" at any time to quit the game.)\n\n`);
             console.log(`Starting with ${playerCount} players...`);
             await delay(2000);
-            console.log(players.map(p => p.name).join(" vs "));
-            await delay(3000);
-            console.log(`\n\nEvery player has been dealt 5 cards...\n`);
+            console.log(`<<< ${players.map(p => p.name).join(" vs ")} >>>`);            await delay(3000);
+            console.log(`\n\nEvery player has been dealt ${cardsPerPlayer} cards...\n`);
             await delay(2000);
     }
 
@@ -46,13 +45,13 @@ export class UIService {
             console.log(`
       /=============================\\
       |        ELIMINATED!          |
-      |   ${player.name.padEnd(25)}|
+      |   ${player.name.padEnd(25)} |
       \\=============================/\n`);
         });
     }
 
-   async showNewRoundBanner(currentPlayer: Player) {
-        console.log("\n/------------------- NEW ROUND -------------------\\");
+    async showNewRoundBanner(currentPlayer: Player, roundNumber: number) {
+        console.log(`\n/-------------------- ROUND ${roundNumber} --------------------\\`);
         if (currentPlayer.name === "You") {
             console.log("|                  It's your turn!                |");
         } else {
