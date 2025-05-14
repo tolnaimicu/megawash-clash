@@ -1,8 +1,7 @@
 # MegaWash Clash 🧼🌀
 
-MegaWash Clash is a command-line card game written in TypeScript where washing machines battle it out using their RPM, energy rating, fastest program, and capacity. You play against bots, choose which feature to compete with each round, and try to outlast everyone.
+MegaWash Clash is a command-line card game written in TypeScript where washing machines battle using their RPM, energy rating, fastest program, and capacity. You play against bots, choose which feature to compete with each round, and try to outsmart the bots.
 
-It's designed to be fun, testable, and a bit retro — with a few added touches like CLI banners, tiebreakers, and a leaderboard.
 
 ---
 
@@ -22,3 +21,8 @@ Clone the repo and run it using ts-node:
 ```bash
 npm install
 npx ts-node src/cli/main.ts
+---
+Clone the repo and use it with Docker:
+```bash
+docker build -t megawash-clash .
+docker run -it megawash-clash
