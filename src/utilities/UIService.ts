@@ -68,7 +68,7 @@ export class UIService {
             const displayVal = chosenFeature === Feature.ENERGY
                 ? Card.energyLabels[p.card.energyRating] ?? val
                 : chosenFeature === Feature.FASTEST
-                ? Math.abs(val) // Convert negative fastestProgram values to positive
+                ? Math.abs(val) // convering to positive for display
                 : val;
             console.log(`| ${p.player.name.padEnd(10)}: ${FeatureDisplayNames[chosenFeature]} = ${displayVal}`);
         });
