@@ -11,6 +11,7 @@ MegaWash Clash is a command-line card game written in TypeScript where washing m
 - readline-sync (for CLI input)
 - Jest (for unit tests)
 - Docker (for easy sharing and cloud compatibility)
+- GitHub Actions (for pipeline)
 
 ---
 
@@ -20,7 +21,7 @@ Clone the repo and run it using ts-node:
 
 ```bash
 npm install
-npx ts-node src/cli/main.ts
+npm run start
 ```
 
 
@@ -29,13 +30,13 @@ npx ts-node src/cli/main.ts
 Clone the repo and use it with Docker:
 
 ```bash
-docker build -t megawash-clash .
-docker run -it megawash-clash
+npm run docker:build
+npm run docker:run
 ```
 
 ## Run tests:
 
 ```bash
-npx jest
+npm run test
 ```
 
