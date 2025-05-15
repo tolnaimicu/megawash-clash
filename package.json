@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "ts-node src/main.ts",
+    "docker:build": "docker build -t megawash-clash .",
+    "docker:run": "docker run -it megawash-clash",
+    "test":"jest"
   },
   "keywords": [],
   "author": "",
