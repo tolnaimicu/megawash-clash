@@ -9,19 +9,23 @@ import { UIService } from "../utilities/UIService";
 
 
 export class Game {
+
     players: Player[] = [];
     currentPlayerIndex: number = 0;
+
     private uiService: UIService;
-    private roundNumber: number = 1; //for current round checking
-    private cardsPerPlayer: number = 0; // number of cards for each player
+    private roundNumber: number = 1; 
+    private cardsPerPlayer: number = 0; 
 
 
     constructor(private playerCount: number) {
+
         if (playerCount < 3) throw new Error("Minimum 3 players required.");
         this.uiService = new UIService();
     }
 
     private setupGame() {
+
         // first player is "You", the rest are controller robots
         this.players.push(new Player("You"));
         for (let i = 1; i < this.playerCount; i++) {
@@ -37,7 +41,6 @@ export class Game {
             player.deck = hands[index];
         });
 
-    
         console.log("--------------------------");
     
         // selecting the starting player
@@ -45,6 +48,7 @@ export class Game {
     }
 
     public async start() {
+
         console.clear();
         this.cardsPerPlayer = validateNumericInput(
             "Enter the number of cards each player should receive (min 1): ",
@@ -65,6 +69,7 @@ export class Game {
     }
 
     private async playRound() {
+
         const before = [...this.players];
         this.removeEliminatedPlayers();
         const eliminated = before.filter(p => !this.players.includes(p));
@@ -100,6 +105,7 @@ export class Game {
             console.log(`\n${currentPlayer.name} chose to compete with: ${FeatureDisplayNames[chosenFeature]}`);
         }
     
+
         //  PLAYING TOP CARDS
         const played: { player: Player; card: Card }[] = [];
     
@@ -117,8 +123,10 @@ export class Game {
 
         let playedCards: Card[] = played.map(p => p.card);
     
+
         //  TIEBREAKER SECTION
         while (winners.length > 1) {
+
             console.log("\nTiebreaker!");
     
             const newCards: { player: Player; card: Card }[] = [];
@@ -141,6 +149,7 @@ export class Game {
             winners = tiebreakValues.filter(c => c.value === newMax);
         }
     
+
         const roundWinner = winners[0].player;
         roundWinner.receiveCards(shuffle(playedCards));
         roundWinner.incrementWin();
@@ -153,6 +162,7 @@ export class Game {
     
 
     private askUserToChooseFeature(): Feature {
+
         const features = Object.values(Feature);
         const options = Object.entries(FeatureDisplayNames).map(
             ([key, label], idx) => `${idx + 1}. ${label}`
@@ -165,18 +175,22 @@ export class Game {
     }
 
     private nextTurn() {
+
         this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
     }
 
     private removeEliminatedPlayers() {
+
         this.players = this.players.filter(p => !p.isEliminated());
     }
 
     private showPlayerCardCounts() {
+
         this.uiService.showPlayerCardCounts(this.players);
     }
 
     private isGameOver(): boolean {
+        
         return this.players.filter(p => !p.isEliminated()).length <= 1;
     }
 }

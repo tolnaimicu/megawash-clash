@@ -3,7 +3,7 @@ import { Player } from "../src/core/Player";
 import { Card } from "../src/core/Card";
 import { Feature } from "../src/values/features";
 
-// Helper to create a card with defined values
+// helper function to create card with defined values
 function createCard(rpm: number, energy: number, fastest: number, capacity: number): Card {
   const card = new Card();
   card.rpm = rpm;
