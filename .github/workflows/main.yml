@@ -26,5 +26,13 @@ jobs:
         run: npx tsc --noEmit
 
       - name: Run tests
-        run: npx jest
-        
+        run: npm run test
+
+      - name: Check for TODOs in code
+        run: |
+          if grep -r -i "TODO" ./src; then
+            echo "TODOs left in code.";
+            exit 1
+          else
+            echo "No TODOs found.";
+          fi
